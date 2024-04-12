@@ -73,7 +73,6 @@ class FileDatabaseMethods:
         """
         links is a list of tuples (url,plugin)
         """
-        order = self._next_file_order(package)
         orders = [order + x for x in range(len(links))]
         links = [(x[0], parse.name(x[0]), x[1], package, o) for x, o in zip(links, orders)]
         self.c.executemany(
@@ -268,7 +267,7 @@ class FileDatabaseMethods:
         )
         ids = []
         statuses = "','".join(x[3] for x in data)
-        self.c.execute(f"SELECT id FROM links WHERE url IN ('{statuses}')")
+        self.c.execute("SELECT id FROM links WHERE url IN (?)", (statuses, ))
         for r in self.c:
             ids.append(int(r[0]))
         return ids
