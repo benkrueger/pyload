@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import json
-import random
 import re
 
 import pycurl
@@ -9,6 +8,7 @@ from pyload.core.network.http.exceptions import BadHeader
 from pyload.core.network.request_factory import get_request
 from ..helpers import parse_html_header
 from ..base.addon import BaseAddon
+import secrets
 
 
 class TransmissionRPC(BaseAddon):
@@ -48,7 +48,7 @@ class TransmissionRPC(BaseAddon):
     def send_to_transmission(self, url):
         transmission_rpc_url = self.config.get("rpc_url")
         client_request_id = self.classname + "".join(
-            random.choice("0123456789ABCDEF") for _ in range(4)
+            secrets.choice("0123456789ABCDEF") for _ in range(4)
         )
         req = get_request()
 

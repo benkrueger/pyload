@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import json
-import random
 import string
 import time
 
@@ -9,6 +8,7 @@ import pycurl
 from pyload.core.network.http.exceptions import BadHeader
 
 from ..base.multi_account import MultiAccount
+import secrets
 
 
 class DownsterApi(object):
@@ -53,7 +53,7 @@ class DownsterApi(object):
 
     def rnd(self):
         return "".join(
-            [random.choice(string.ascii_lowercase + string.digits) for n in range(5)]
+            [secrets.choice(string.ascii_lowercase + string.digits) for n in range(5)]
         )
 
     def flow_id(self):

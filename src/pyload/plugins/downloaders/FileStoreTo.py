@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-import random
 import re
 
 from pyload.core.network.http.exceptions import BadHeader
 
 from ..base.simple_downloader import SimpleDownloader
+import secrets
 
 
 class FileStoreTo(SimpleDownloader):
@@ -73,7 +73,7 @@ class FileStoreTo(SimpleDownloader):
         except BadHeader as exc:
             self.log_debug(f"FileStore.to httpcode: {exc.code}")
             if exc.code == 503 and self.config.get("beadheader_retry", True):
-                rand_delay = random.randrange(0, 6) * 5
+                rand_delay = secrets.SystemRandom().randrange(0, 6) * 5
                 self.log_warning(self._("Temporary server error, retrying..."))
                 self.retry(10, 10 + rand_delay)
 

@@ -5,7 +5,6 @@ import re
 import subprocess
 import time
 from datetime import timedelta
-from random import choice
 from threading import Event, Lock
 
 # import pycurl
@@ -17,6 +16,7 @@ from ..threads.download_thread import DownloadThread
 from ..threads.info_thread import InfoThread
 from ..utils import fs
 from ..utils.struct.lock import lock
+import secrets
 
 
 class ThreadManager:
@@ -227,7 +227,7 @@ class ThreadManager:
         ip = ""
         for i in range(10):
             try:
-                sv = choice(services)
+                sv = secrets.choice(services)
                 ip = get_url(sv[0])
                 ip = re.match(sv[1], ip).group(1)
                 break
