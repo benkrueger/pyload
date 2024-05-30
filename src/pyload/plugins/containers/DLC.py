@@ -3,7 +3,6 @@
 import base64
 import os
 import re
-import xml.dom.minidom
 
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
@@ -11,6 +10,7 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from pyload.core.utils.convert import to_str
 
 from ..base.container import BaseContainer
+import defusedxml.minidom
 
 
 class BadDLC(Exception):
@@ -59,7 +59,7 @@ class DLCDecrypter(object):
             decryptor.update(dlc_data) + decryptor.finalize()
         ))
 
-        root = xml.dom.minidom.parseString(xml_data).documentElement
+        root = defusedxml.minidom.parseString(xml_data).documentElement
         content_node = root.getElementsByTagName("content")[0]
 
         packages = DLCDecrypter._parse_packages(content_node)
