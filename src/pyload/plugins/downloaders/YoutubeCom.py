@@ -20,6 +20,7 @@ from pyload.core.utils.purge import uniquify
 
 from ..base.downloader import BaseDownloader
 from ..helpers import exists, is_executable, renice, replace_patterns, which
+from security import safe_command
 
 
 def try_get(data, *path):
@@ -92,8 +93,7 @@ class Ffmpeg:
 
             cmd = which(ffmpeg) or ffmpeg
 
-            p = subprocess.Popen(
-                [cmd, "-version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE
+            p = safe_command.run(subprocess.Popen, [cmd, "-version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE
             )
             out, err = (r.strip() if r else "" for r in p.communicate())
         except OSError:
@@ -159,7 +159,7 @@ class Ffmpeg:
         call = [self.CMD] + args + [self.output_filename]
         self.plugin.log_debug("EXECUTE " + " ".join(call))
 
-        p = subprocess.Popen(call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p = safe_command.run(subprocess.Popen, call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         renice(p.pid, self.priority)
 

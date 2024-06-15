@@ -8,6 +8,7 @@ from pyload import PKGDIR
 from pyload.core.utils.convert import to_str
 from pyload.plugins.base.extractor import ArchiveError, BaseExtractor, CRCError, PasswordError
 from pyload.plugins.helpers import renice
+from security import safe_command
 
 
 class SevenZip(BaseExtractor):
@@ -88,8 +89,7 @@ class SevenZip(BaseExtractor):
             if os.name == "nt":
                 cls.CMD = os.path.join(PKGDIR, "lib", "7z.exe")
 
-            p = subprocess.Popen(
-                [cls.CMD], stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding="utf-8"
+            p = safe_command.run(subprocess.Popen, [cls.CMD], stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding="utf-8"
             )
             out, err = (r.strip() if r else "" for r in p.communicate())
 
@@ -258,7 +258,7 @@ class SevenZip(BaseExtractor):
         self.log_debug("EXECUTE " + " ".join(call))
 
         call = [to_str(cmd) for cmd in call]
-        p = subprocess.Popen(call, stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding="utf-8")
+        p = safe_command.run(subprocess.Popen, call, stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding="utf-8")
 
         renice(p.pid, self.priority)
 

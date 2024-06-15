@@ -4,6 +4,7 @@ import os
 import subprocess
 
 from ..base.addon import BaseAddon, expose
+from security import safe_command
 
 
 class ExternalScripts(BaseAddon):
@@ -141,7 +142,7 @@ class ExternalScripts(BaseAddon):
             + " ".join('"' + arg + '"' if " " in arg else arg for arg in call)
         )
 
-        p = subprocess.Popen(call)  # NOTE: output goes to pyload
+        p = safe_command.run(subprocess.Popen, call)  # NOTE: output goes to pyload
 
         return p
 
