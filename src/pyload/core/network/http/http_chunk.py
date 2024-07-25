@@ -81,7 +81,7 @@ class ChunkInfo:
             ci.loaded = True
             ci.set_size(size)
             while True:
-                if not fh.readline():  #: skip line
+                if not fh.readline(5_000_000):  #: skip line
                     break
                 name = fh.readline()[1:-1]
                 range = fh.readline()[1:-1]
