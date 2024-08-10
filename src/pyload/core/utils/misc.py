@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
-import random
 import string
 
 import js2py
+import secrets
 
 js2py.disable_pyimport()
 
 
 def random_string(length):
     seq = string.ascii_letters + string.digits + string.punctuation
-    return "".join(random.choice(seq) for _ in range(length))
+    return "".join(secrets.choice(seq) for _ in range(length))
 
 
 def is_plural(value):

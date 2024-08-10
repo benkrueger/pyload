@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import random
 
 from ..base.simple_downloader import SimpleDownloader
+import secrets
 
 
 class GigapetaCom(SimpleDownloader):
@@ -33,7 +33,7 @@ class GigapetaCom(SimpleDownloader):
     COOKIES = [("gigapeta.com", "lang", "us")]
 
     def handle_free(self, pyfile):
-        captcha_key = str(random.randint(1, 100_000_000))
+        captcha_key = str(secrets.SystemRandom().randint(1, 100_000_000))
         captcha_url = "http://gigapeta.com/img/captcha.gif?x={}".format(captcha_key)
 
         self.check_errors()

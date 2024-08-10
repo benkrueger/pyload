@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import json
-import random
 import re
 import time
 import urllib.parse
 
 from ..base.downloader import BaseDownloader
+import secrets
 
 
 class ZbigzCom(BaseDownloader):
@@ -59,7 +59,7 @@ class ZbigzCom(BaseDownloader):
             self.fail("Hash not found")
 
         file_id = m.group(1)
-        call_id = "".join(random.choice("0123456789") for _ in range(20))
+        call_id = "".join(secrets.choice("0123456789") for _ in range(20))
 
         self.pyfile.set_custom_status("torrent")
         self.pyfile.set_progress(0)
