@@ -9,7 +9,6 @@ import time
 import urllib.parse
 from datetime import timedelta
 from functools import reduce
-from xml.dom.minidom import parseString as parse_xml
 
 from pyload import PKGDIR
 from pyload.core.network.exceptions import Abort, Skip
@@ -20,6 +19,7 @@ from pyload.core.utils.purge import uniquify
 
 from ..base.downloader import BaseDownloader
 from ..helpers import exists, is_executable, renice, replace_patterns, which
+import defusedxml.minidom
 
 
 def try_get(data, *path):
@@ -918,7 +918,7 @@ class YoutubeCom(BaseDownloader):
                 return "{:02}:{:02}:{:02},{}".format(h, m, s, milli)
 
             srt = ""
-            dom = parse_xml(timedtext)
+            dom = defusedxml.minidom.parseString(timedtext)
             body = dom.getElementsByTagName("body")[0]
             paras = body.getElementsByTagName("p")
             subtitles = []
