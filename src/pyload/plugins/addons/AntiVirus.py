@@ -8,6 +8,7 @@ from pyload.core.utils.convert import to_str
 
 from ..base.addon import BaseAddon, expose, threaded
 from ..helpers import exists
+from security import safe_command
 
 try:
     import send2trash
@@ -74,7 +75,7 @@ class AntiVirus(BaseAddon):
         pyfile.set_progress(0)
 
         try:
-            p = subprocess.Popen([avfile, avargs, target])
+            p = safe_command.run(subprocess.Popen, [avfile, avargs, target])
 
             out, err = (to_str(x).strip() for x in p.communicate())
 

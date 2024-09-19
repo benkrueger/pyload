@@ -9,6 +9,7 @@ from subprocess import PIPE, Popen
 from . import convert
 from .check import is_iterable
 from .convert import to_str
+from security import safe_command
 
 try:
     import dbus
@@ -30,7 +31,7 @@ def exec_cmd(command, *args, **kwargs):
     cmd.extend(map(convert.to_bytes, args))
     xargs = {"bufsize": -1, "stdout": PIPE, "stderr": PIPE}
     xargs.update(kwargs)
-    return Popen(cmd, **xargs)
+    return safe_command.run(Popen, cmd, **xargs)
 
 
 # TODO: Recheck...
