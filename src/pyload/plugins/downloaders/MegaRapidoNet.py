@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
-import random
 
 from ..base.multi_downloader import MultiDownloader
+import secrets
 
 
 def random_with_n_digits(n):
     rand = "0."
     not_zero = 0
     for i in range(1, n + 1):
-        r = random.randint(0, 9)
+        r = secrets.SystemRandom().randint(0, 9)
         if r > 0:
             not_zero += 1
         rand += str(r)

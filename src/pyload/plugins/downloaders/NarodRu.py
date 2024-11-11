@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-import random
 import re
 import urllib.parse
 
 from ..base.simple_downloader import SimpleDownloader
+import secrets
 
 
 class NarodRu(SimpleDownloader):
@@ -43,7 +43,7 @@ class NarodRu(SimpleDownloader):
     def handle_free(self, pyfile):
         self.data = self.load(
             "http://narod.ru/disk/getcapchaxml/?rnd={}".format(
-                int(random.random() * 777)
+                int(secrets.SystemRandom().random() * 777)
             )
         )
 
