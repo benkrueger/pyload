@@ -17,6 +17,7 @@ from ..threads.download_thread import DownloadThread
 from ..threads.info_thread import InfoThread
 from ..utils import fs
 from ..utils.struct.lock import lock
+from security import safe_command
 
 
 class ThreadManager:
@@ -199,7 +200,7 @@ class ThreadManager:
         self.pyload.log.debug(f"Old IP: {old_ip}")
 
         try:
-            subprocess.run(reconnect_script)
+            safe_command.run(subprocess.run, reconnect_script)
         except Exception:
             self.pyload.log.warning(self._("Failed executing reconnect script!"))
             self.pyload.config.set("reconnect", "enabled", False)
