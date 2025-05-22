@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import json
-import random
 import re
 
 from pyload.core.datatypes.pyfile import status_map
 from pyload.core.network.request_factory import get_url
 
 from ..base.downloader import BaseDownloader
+import secrets
 
 
 def get_info(urls):
@@ -121,4 +121,4 @@ class DailymotionCom(BaseDownloader):
             desired_quality = int(re.search(r"\d+", desired_quality).group(0))
             quality = min(qualities, key=lambda x: abs(x - desired_quality))
 
-        self.download(random.choice(streams[quality]))
+        self.download(secrets.choice(streams[quality]))

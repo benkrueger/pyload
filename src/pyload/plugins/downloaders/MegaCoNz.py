@@ -3,7 +3,6 @@
 import base64
 import json
 import os
-import random
 import re
 import struct
 
@@ -15,6 +14,7 @@ from pyload.core.utils.convert import to_bytes
 
 from ..base.downloader import BaseDownloader
 from ..helpers import exists
+import secrets
 
 ############################ General errors ###################################
 # EINTERNAL            (-1): An internal error has occurred. Please submit a bug report, detailing the exact circumstances in which this error occurred
@@ -245,8 +245,7 @@ class MegaClient:
         """
         Dispatch a call to the api, see https://mega.co.nz/#developers.
         """
-        uid = random.randint(
-            10 << 9, 10 ** 10
+        uid = secrets.SystemRandom().randint(10 << 9, 10 ** 10
         )  #: : Generate a session id, no idea where to obtain elsewhere
         get_params = {"id": uid}
 

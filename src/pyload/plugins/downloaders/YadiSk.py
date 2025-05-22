@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import json
-import random
 import re
 
 from ..base.simple_downloader import SimpleDownloader
+import secrets
 
 
 class YadiSk(SimpleDownloader):
@@ -35,7 +35,7 @@ class YadiSk(SimpleDownloader):
             if "idclient" not in info:
                 info["idclient"] = ""
                 for _ in range(32):
-                    info["idclient"] += random.choice("0123456abcdef")
+                    info["idclient"] += secrets.choice("0123456abcdef")
 
             m = re.search(
                 r'<script id="models-client" type="application/json">(.+?)</script>',

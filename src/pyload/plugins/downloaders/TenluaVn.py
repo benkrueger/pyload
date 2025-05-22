@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import json
-import random
 import re
 
 from ..base.simple_downloader import SimpleDownloader
+import secrets
 
 
 def gen_r():
-    return "0." + "".join(random.choice("0123456789") for x in range(16))
+    return "0." + "".join(secrets.choice("0123456789") for x in range(16))
 
 
 class TenluaVn(SimpleDownloader):
