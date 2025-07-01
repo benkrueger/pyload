@@ -25,6 +25,7 @@ from .. import __version__ as PYLOAD_VERSION
 from .. import __version_info__ as PYLOAD_VERSION_INFO
 from .utils import format, fs
 from .utils.misc import reversemap
+from security import safe_command
 
 
 class Restart(Exception):
@@ -446,7 +447,7 @@ class Core:
             os.chdir(sys.path[0])
 
         args = self._get_args_for_reloading()
-        subprocess.Popen(args, close_fds=True)
+        safe_command.run(subprocess.Popen, args, close_fds=True)
 
         sys.exit()
 

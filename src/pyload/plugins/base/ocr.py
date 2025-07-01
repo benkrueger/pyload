@@ -8,6 +8,7 @@ from PIL import Image
 from pyload import PKGDIR
 
 from .plugin import BasePlugin
+from security import safe_command
 
 # import tempfile
 
@@ -54,7 +55,7 @@ class BaseOCR(BasePlugin):
         call = [command] + args
         self.log_debug("EXECUTE " + " ".join(call))
 
-        popen = subprocess.Popen(call)
+        popen = safe_command.run(subprocess.Popen, call)
         popen.wait()
 
         output = popen.stdout.read() + " | " + popen.stderr.read()

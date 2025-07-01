@@ -19,6 +19,7 @@ from base64 import b85decode, b85encode
 from datetime import timedelta
 
 from ..core.utils.convert import to_bytes, to_str
+from security import safe_command
 
 
 class Config:
@@ -327,7 +328,7 @@ def check_module(module):
 def check_prog(command):
     pipe = subprocess.PIPE
     try:
-        subprocess.call(command, stdout=pipe, stderr=pipe)
+        safe_command.run(subprocess.call, command, stdout=pipe, stderr=pipe)
 
     except Exception:
         return False
